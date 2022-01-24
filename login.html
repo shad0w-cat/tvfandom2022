@@ -1,0 +1,101 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-scope" content="profile email">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id"
+        content="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com">
+    <title>TV Fandom</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-type="icon" data-size="medium" data-theme="dark"></div>
+    <div id="g_id_onload" data-client_id="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com"
+        data-context="signin" data-ux_mode="popup" data-callback="onSignIn" data-nonce="">
+    </div>
+
+    <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_black" data-text="continue_with"
+        data-size="large" data-logo_alignment="left">
+    </div>
+    <div id="g_id_onload" data-client_id="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com"
+        data-context="signin" data-ux_mode="popup" data-callback="onSignIn" data-auto_prompt="false">
+    </div>
+
+    <div class="g_id_signin" data-type="standard" data-theme="filled_black" data-text="continue_with" data-size="large"
+        data-logo_alignment="left" data-width="150">
+    </div>
+    <a href="#" onclick="signOut();">Sign out</a>
+    <script>
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+
+
+
+        function onSignIn(googleUser) {
+            console.log("Success")
+            // Useful data for your client-side scripts:
+            var profile = googleUser.getBasicProfile();
+            console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+            console.log('Full Name: ' + profile.getName());
+            console.log('Given Name: ' + profile.getGivenName());
+            console.log('Family Name: ' + profile.getFamilyName());
+            console.log("Image URL: " + profile.getImageUrl());
+            console.log("Email: " + profile.getEmail());
+
+            // The ID token you need to pass to your backend:
+            var id_token = googleUser.getAuthResponse().id_token;
+            console.log("ID Token: " + id_token);
+        }
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <script src="assets/js/gl.js"></script>
+</body>
+
+</html>
+ -->
+<html>
+
+<head>
+    <meta name="google-signin-client_id"
+        content="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com">
+</head>
+
+<body>
+    <div id="my-signin2"></div>
+    <script>
+        function onSuccess(googleUser) {
+            console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+        }
+
+        function onFailure(error) {
+            console.log(error);
+        }
+
+        function renderButton() {
+            gapi.signin2.render('my-signin2', {
+                'scope': 'profile email',
+                'width': 240,
+                'height': 50,
+                'longtitle': true,
+                'theme': 'filled_black',
+                'onsuccess': onSuccess,
+                'onfailure': onFailure,
+                text: 'continue_with'
+            });
+        }
+    </script>
+
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+</body>
+
+</html>
