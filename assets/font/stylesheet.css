@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Showtime';
+    src: url('Showtime.eot');
+    src: url('Showtime.eot?#iefix') format('embedded-opentype'),
+        url('Showtime.woff2') format('woff2'),
+        url('Showtime.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

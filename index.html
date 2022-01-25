@@ -10,31 +10,87 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id"
+        content="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com">
+    <link href="assets/font/stylesheet.css" rel="stylesheet">
+
 </head>
 
 <body>
     <div id="main">
         <header>
             <div class="logo">
-                <h1>TV Fandom</h1>
-                <div id="countdown">
+                <h1
+                    style="font-family: 'Showtime'; font-weight: normal; font-style: normal; font-size: 60px; color: black;">
+                    TV Fandom</h1>
+                <!-- <div id="countdown">
                     <script src="https://cdn.logwork.com/widget/countdown.js"></script>
                     <a href="https://logwork.com/countdown-s4ik" class="countdown-timer" data-timezone="Asia/Kolkata"
                         data-textcolor="#ffffff" data-date="2022-01-25 16:18" data-digitscolor="#ffffff">Time Left</a>
-                </div>
+                </div> -->
             </div>
         </header>
         <main>
             <div class="event-btns">
-                <a href="prelims.php"><button class="event-btn" id="prelims-btn">PRELIMS</button></a>
+                <!-- <a href="prelims.php"> </a> -->
+                <button class="event-btn" id="prelims-btn" onclick="loginGoogle()">PRELIMS</button>
+                <br>
+                <br>
+                <br>
+                <br>
                 <button class="event-btn" id="mains-btn">MAINS</button>
             </div>
-            <div class="login">
-                <!-- <form action="" method="post">
-                </form> -->
+            <div id="login-div">
+                <i class="fas fa-times" onclick="closeLoginDiv()"></i>
+                <div class="g-signin2" data-onsuccess="onSignIn" data-onfailure="errorLogin()" data-type="icon"
+                    data-size="medium" data-theme="dark" data-text="continue_with">
+                </div>
+                <!-- <a href="#" onclick="signOut();">Sign out</a> -->
+
+
+                <form action="prelims.php" method="post" id="login-form">
+                    <input type="hidden" name="username">
+                    <input type="hidden" name="email">
+                    <input type="hidden" name="fName">
+                    <input type="hidden" name="lName">
+                </form>
             </div>
         </main>
     </div>
+    <script>
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+
+        function onSignIn(googleUser) {
+            console.log("Success")
+            // Useful data for your client-side scripts:
+            var profile = googleUser.getBasicProfile();
+            document.getElementsByName("username")[0].value = profile.getId();
+            document.getElementsByName("email")[0].value = profile.getEmail();
+            document.getElementsByName("fName")[0].value = profile.getGivenName();
+            document.getElementsByName("lName")[0].value = profile.getFamilyName();
+            document.forms["login-form"].submit();
+            // The ID token you need to pass to your backend:
+            //var id_token = googleUser.getAuthResponse().id_token;
+            //console.log("ID Token: " + id_token);
+        }
+    </script>
+    <script>
+        function closeLoginDiv() {
+            document.getElementById('login-div').style.display = 'none';
+        }
+
+        function loginGoogle() {
+            document.getElementById('login-div').style.display = 'initial';
+        }
+    </script>
 </body>
 
 </html>
