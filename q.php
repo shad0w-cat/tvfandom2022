@@ -25,12 +25,14 @@ for ($j = 0 ; $j < $rows ; ++$j)
     //echo '<iframe src="https://drive.google.com/file/d/1ZIUG8EhjEQoSOVYQWdZavDwjzFxqfHFW/preview" width="640" height="480" allow="autoplay"></iframe>';
 
     echo '<hr>';
+    echo '<br>';
+    echo '<br>';
     $i = 0;
     foreach (explode(",",$rowData['options']) as $opt)
     {
         $i++;
         echo '<input type="radio" class="options" id="Q' . $j+1 . 'Opt' . $i . '" name="option'. $j+1 .'" value="' . trim($opt) . '">';
-        echo '<label class="option-labels" for="Q' . $j+1 . 'Opt' . $i . '">' . trim($opt) . ' </label><br>';
+        echo '<label class="option-labels" for="Q' . $j+1 . 'Opt' . $i . '"><span></span>' . trim($opt) . ' </label><br>';
     }
     echo '<button type="button" name="option' . $j+1 . '"class="reset-btn" onClick=resetRadio(this)>Clear</button>';
     echo '<div style="clear: both"></div>';

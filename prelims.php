@@ -41,13 +41,14 @@ function startNewSession ()
 
 <head>
     <meta charset="UTF-8">
+    <link href="assets/font/stylesheet.css" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TV Fandom</title>
+    <title>Prelims - TV Fandom</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -60,8 +61,10 @@ function startNewSession ()
                 <h1>TV Fandom</h1>
             </div>
             <div id="countdown" class="countdown-shadow"></div>
+            <div style="clear: both"></div>
+
         </header>
-        <div class="gapdiv">
+        <!-- <div class="gapdiv"> -->
         </div>
         <main>
             <div class="questions">
