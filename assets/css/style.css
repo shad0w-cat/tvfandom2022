@@ -8,11 +8,21 @@
     font-family: 'Barlow', sans-serif;
 }
 
+html {
+    padding-bottom: 5rem;
+}
+
 body {
     scroll-behavior: smooth;
+    padding-top: 7rem;
     /* background-color:; */
     /* background-color: #4FBDBA; */
     user-select: none;
+    background-image: url("../img/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    padding-bottom: 89px;
 }
 
 /*
@@ -20,16 +30,16 @@ body {
 */
 
 header {
-    position: sticky;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 5rem;
-    background-color: #35858b;
+    background-color: #3b3b3b;
     border-radius: 0.3rem;
     max-width: 100vw;
     padding: 1em;
-    margin-bottom: 2rem;
+    /*margin-bottom: 2rem;*/
     color: rgb(211, 12, 12);
     color: aliceblue;
     font-weight: 900;
@@ -41,7 +51,7 @@ h1 {
     font-weight: normal;
     font-style: normal;
     font-size: 60px;
-    color: black;
+    color: #fff;
 }
 
 .logo {
@@ -52,15 +62,16 @@ h1 {
     /* margin-bottom: 100em;
     float: right; */
     position: absolute;
-    top: 3em;
-    right: 2em;
-    font-size: xx-large;
+    top: 2.5rem;
+    right: 2rem;
+    font-size: xx-large !important;
+    font-weight: 600;
 }
 
 .countdown-shadow {
-    text-shadow: 0 0 10px lightgreen,
-        0 0 10px lightgreen,
-        0 0 10px lightgreen;
+    text-shadow: 0 0 10px rgb(18, 153, 18),
+        0 0 10px rgb(18, 153, 18),
+        0 0 10px rgb(18, 153, 18);
 }
 
 .countdown-shadow-10min {
@@ -88,6 +99,21 @@ h1 {
 /*
 -------------------   MAIN PAGE STYLING   --------------------
 */
+main {
+    height: 88vh;
+    /*backdrop-filter: blur(5px);*/
+}
+
+.highlight {
+    background-color: rgba(255, 255, 255, 0.8);
+    height: 70%;
+    width: 30em;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 .event-btns {
     position: absolute;
@@ -108,6 +134,10 @@ h1 {
     width: 100%;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 #login-div {
     position: absolute;
     top: 50%;
@@ -121,18 +151,17 @@ h1 {
     display: none;
     text-align: center;
     border-radius: 1em;
+    font-size: large;
 }
 
-.g-signin2 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+#login-div input[type=submit] {
+    float: none;
+    font-size: large;
 }
 
 .fas {
     position: absolute;
-    right: 2%;
+    right: 1.5%;
     top: 2%;
 }
 
@@ -152,6 +181,7 @@ h1 {
     border: 3px solid #353434;
     border-radius: 1em;
     margin: 1em auto;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .question {
@@ -179,9 +209,11 @@ hr {
     user-select: none;
 }
 
+
 .question-img {
     vertical-align: top;
     float: right;
+    width: 400px;
 }
 
 h4 {
@@ -200,25 +232,24 @@ input[type=radio]::after {
     width: 20px;
     height: 20px;
     border-radius: 15px;
-    top: -2px;
-    left: -1px;
+    top: -7px;
+    left: -3px;
     position: relative;
     background-color: #fff;
     content: '';
     display: inline-block;
     visibility: visible;
-    border: 1px solid blue;
+    border: 1px solid black;
     box-sizing: border-box;
 }
 
 input[type=radio]:checked::after {
     transition: ease-in .1s;
-    border: 5px solid blue;
     width: 20px;
     height: 20px;
     border-radius: 15px;
-    top: -2px;
-    left: -1px;
+    top: -7px;
+    left: -3px;
     position: relative;
     background-color: #fff;
     content: '';
@@ -235,12 +266,12 @@ label {
 }
 
 input[type=radio]:checked+label {
-    font-size: x-large;
-    color: violet;
-    text-shadow: 1px 1px 6px black;
+    font-size: xx-large;
+    color: rgb(0, 0, 0);
+    /*text-shadow: 1px 1px 6px blue;*/
 }
 
-*/ input[type=submit] {
+input[type=submit] {
     padding: 1rem;
     border-radius: 1rem;
     position: static;
@@ -249,6 +280,24 @@ input[type=radio]:checked+label {
     border: 2px solid black;
     background-color: #353434;
     color: white;
+}
+
+input[type=text],
+input[type=password] {
+    padding: 10px;
+    border: .5px solid black;
+    border-radius: 10px;
+    font-size: larger;
+    width: 50%;
+}
+
+.highlight-tb {
+    border: .5px solid black;
+}
+
+label span {
+    font-size: large;
+    font-weight: 300;
 }
 
 /* Clear Button Styling */
@@ -265,4 +314,144 @@ input[type=radio]:checked+label {
 /*
 -------------------   MEDIA QUERIES   -------------------
 */
-@media screen and (max-width:1700px) {}
+
+@media screen and (max-width:1000px) {
+    .highlight {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:600px) {
+    h1 {
+        font-size: 50px;
+    }
+
+    header {
+        height: 6.5rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #countdown {
+        position: relative;
+        top: 1rem;
+        right: 1rem;
+        font-size: x-large !important;
+        font-weight: 500;
+    }
+
+    .questions {
+        position: relative;
+        width: 80%;
+        padding: 5px;
+        align-items: center;
+        border: 2px solid #353434;
+        border-radius: 1em;
+        margin: 0.8em auto;
+    }
+
+    .question-text {
+        margin-top: 0.75em;
+        font-size: large;
+        font-weight: 400;
+        width: 100%;
+        user-select: none;
+    }
+
+    .question-img {
+        vertical-align: top;
+        float: right;
+        width: 80%;
+    }
+
+    h4 {
+        margin-bottom: 0.5rem;
+        font-size: 35px;
+    }
+
+
+    /* Form Styling */
+    input {
+        margin: 7px;
+    }
+
+    input[type=radio]::after {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #fff;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 1px solid black;
+        box-sizing: border-box;
+    }
+
+    input[type=radio]:checked::after {
+        transition: ease-in .1s;
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #fff;
+        border: 4px solid slateblue;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        /*border: 0px solid white;*/
+
+    }
+
+    label {
+        font-weight: 400;
+        font-size: 1.2em;
+        /*color: #072227;*/
+    }
+
+    input[type=radio]:checked+label {
+        font-size: x-large;
+        color: rgb(0, 0, 0);
+        /*text-shadow: 1px 1px 6px blue;*/
+    }
+
+    input[type=submit] {
+        padding: 0.75rem;
+        border-radius: 1rem;
+        position: static;
+        float: right;
+        /*font-weight: 400;*/
+        border: 2px solid black;
+        background-color: #353434;
+        color: white;
+    }
+
+    /* Clear Button Styling */
+    .reset-btn {
+        float: right;
+        padding: 0.3em;
+        font-weight: 600;
+        border-radius: .50em;
+        font-size: large;
+        border: 0.1em solid black;
+    }
+
+    .highlight {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width:500px) {
+    #login-div {
+        width: 80%;
+    }
+
+    .question {
+        padding: 2.5rem;
+    }
+}

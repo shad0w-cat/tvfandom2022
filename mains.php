@@ -7,14 +7,14 @@ if($_SERVER['REQUEST_METHOD'] !== 'POST')
 {
     header("Location: index.html?access=3");   
 }
-else if (!loginCheck($_POST))
-{
-    header("Location: index.html?access=8xc");   
-}
-else 
+// else if (!loginCheckM($_POST))
+// {
+//     header("Location: index.html?access=9xr");   
+// }
+else
 {
     require 'checkquizstatus.php';
-    $status = checkStatus('prelim');
+    $status = checkStatus('mains');
     if ($status[0] == 0)
     {
         header("Location: index.html?access=1");
@@ -27,19 +27,19 @@ else
     {
         require_once 'sessions.php';
         $username = $_POST['username'];
-        $info = checkLog($username, 'prelim');
+        $info = checkLog($username, 'mains');
         if ($info == false)
         {
             startNewSession();
         }
         else 
         {
-            $_SESSION['qname']='prelims';
+            $_SESSION['qname']='mains';
             $_SESSION['start_time']=$info[0];
             $_SESSION['end_time']=$info[1];
             $_SESSION['qended']=$info[3];
             $_SESSION['username']=$_POST['username'];
-            
+
             if ($_SESSION['qended']==1 || strtotime($_SESSION['end_time']) < strtotime("now"))
             {
                 header("Location: ". strtok($_SERVER['HTTP_REFERER'], '?') . "?access=0");
@@ -50,12 +50,12 @@ else
 
 function startNewSession() 
 {
-    $timeLimit= quizEndTime('prelim');
-    $_SESSION['qname']='prelims';
+    $timeLimit= quizEndTime('mains');
+    $_SESSION['qname']='mains';
     $_SESSION['start_time']=date('H:i:s', strtotime("now"));
     $_SESSION['end_time']=date("H:i:s", strtotime("now " . $timeLimit . "min"));
     $_SESSION['username']=$_POST['username'];
-    addNewSession($_SESSION, 'prelim');
+    addNewSession($_SESSION, 'mains');
     /*echo $_SESSION['server_end'];*/
 }
 ?>
@@ -67,16 +67,19 @@ function startNewSession()
     <link href="assets/font/stylesheet.css" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prelims - TV Fandom</title>
+    <title>Mains - TV Fandom</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="shortcut icon" href="assets/img/favicon.jpg" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="assets/css/design.css" />
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;500;600;900&display=swap" rel="stylesheet">
+   
 </head>
 
-<body style="background: none;">
+<body style="background: none; background-color: #111;">
+    <canvas></canvas>
     <div id="main">
         <header>
             <div class="logo">
@@ -93,7 +96,7 @@ function startNewSession()
                 <form action="calculate.php" method="post" id="quiz-form">
                     <?php 
                     require  'q.php';
-                    prelim();
+                    mains();
                     ?>
                     
                     <input type="submit" value="Submit" id="submit-btn">
@@ -102,10 +105,10 @@ function startNewSession()
             </div>
         </main>
     </div>
+    <script src="assets/js/design.js"></script>
     <script>
         var now = <?php echo strtotime('now'); ?> ;
         var distance = <?php echo strtotime($_SESSION['end_time']); ?> - now + 1;
-        console.log(distance);
         var x = setInterval(function () {
 
             // Get today's date and time
@@ -131,7 +134,7 @@ function startNewSession()
             /*document.getElementById("countdown").style.fontSize = 'larger';*/
 
             // If the count down is over, write some text 
-            if (distance <= 0) {
+            if (distance < 0) {
                 clearInterval(x);
                 // document.getElementById("countdown").innerText = "EXPIRED";
                 document.forms["quiz-form"].submit();
@@ -154,7 +157,12 @@ function startNewSession()
             let v = e.getAttribute('name');
             let c = document.getElementsByName(v);
             for (var i = 0 ; i < c.length; i++)
-            c[i].checked = false;
+            {
+                if (c[i].getAttribute('type') == 'radio')
+                    c[i].checked = false;
+                else
+                    c[i].value="";
+            }
         }
 
 
@@ -167,18 +175,27 @@ function startNewSession()
         }
         let radioColor;
         let shadowColor;
-        
-
+        let textB;
+        $("input[type='text']").blur(function()
+        {
+            if( $(this).val().length === 0 ) {
+            }
+        });
         const stylesheet = document.styleSheets[1];
         for (let i = 0; i < stylesheet.cssRules.length; i++) {
             if (stylesheet.cssRules[i].selectorText === 'input[type="radio"]:checked + label') {
-                //console.log("f");
+                console.log("f");
                 shadowColor = stylesheet.cssRules[i];
             }
             else if (stylesheet.cssRules[i].selectorText === 'input[type="radio"]:checked::after')
             {
-                //console.log("f");
+                console.log("f");
                 radioColor = stylesheet.cssRules[i];
+            }
+            else if (stylesheet.cssRules[i].selectorText === '.highlight-tb')
+            {
+                console.log("f");
+                textB = stylesheet.cssRules[i];
             }
             //else
             //console.log(stylesheet.cssRules[i]);
@@ -192,9 +209,113 @@ function startNewSession()
             radioColor.style.setProperty('border', border)
         }
 
+        function setTextBorder(e) {
+            console.log("f");
+            
+            $(this).addClass('highlight-tb');
+            colorR = randomColor();
+            const bshadow = '0px 0px 10px ' + colorR;
+            textB.style.setProperty('box-shadow', bshadow);
+        }
+
         $(document).ready(function () {
             $('input[type=radio]').on('change', setRandomColor);
+            $('input[type=text]').on('input', setTextBorder);
+            $('input[type=text]').on('blur', function(){
+                if ($(this).val().length <= 0)
+                {
+                    // console.log("f");
+                    $(this).removeClass('highlight-tb');
+                }
+            });
+            changeani();
         });
+
+        function changeani()
+        {
+            animationStyles = ['bubbles', 'lines', 'confetti', 'fire', 'sunbeams', 'hearts'];
+            var animationEle = document.getElementsByClassName('particletext');
+            for (var i = 0; i<animationEle.length ; i++ )
+            {
+                animationEle[i].classList.add(animationStyles[Math.floor(Math.random() * animationStyles.length)])
+            }
+        initparticles();
+
+        }
+
+        function initparticles() {bubbles();
+            hearts();
+            lines();
+            confetti();
+            fire();
+            sunbeams();
+        }
+
+        /*The measurements are ... whack (so to say), for more general text usage I would generate different sized particles for the size of text; consider this pen a POC*/
+
+        function bubbles() {
+            $.each($(".particletext.bubbles"), function () {
+                var bubblecount = ($(this).width() / 50) * 10;
+                for (var i = 0; i <= bubblecount; i++) {
+                    var size = ($.rnd(40, 80) / 10);
+                    $(this).append('<span class="particle" style="top:' + $.rnd(20, 80) + '%; left:' + $.rnd(0, 95) + '%;width:' + size + 'px; height:' + size + 'px;animation-delay: ' + ($.rnd(0, 30) / 10) + 's;"></span>');
+                }
+            });
+        }
+
+        function hearts() {
+            $.each($(".particletext.hearts"), function () {
+                var heartcount = ($(this).width() / 50) * 5;
+                for (var i = 0; i <= heartcount; i++) {
+                    var size = ($.rnd(60, 120) / 10);
+                    $(this).append('<span class="particle" style="top:' + $.rnd(20, 80) + '%; left:' + $.rnd(0, 95) + '%;width:' + size + 'px; height:' + size + 'px;animation-delay: ' + ($.rnd(0, 30) / 10) + 's;"></span>');
+                }
+            });
+        }
+
+        function lines() {
+            $.each($(".particletext.lines"), function () {
+                var linecount = ($(this).width() / 50) * 10;
+                for (var i = 0; i <= linecount; i++) {
+                    $(this).append('<span class="particle" style="top:' + $.rnd(-30, 30) + '%; left:' + $.rnd(-10, 110) + '%;width:' + $.rnd(1, 3) + 'px; height:' + $.rnd(20, 80) + '%;animation-delay: -' + ($.rnd(0, 30) / 10) + 's;"></span>');
+                }
+            });
+        }
+
+        function confetti() {
+            $.each($(".particletext.confetti"), function () {
+                var confetticount = ($(this).width() / 50) * 10;
+                for (var i = 0; i <= confetticount; i++) {
+                    $(this).append('<span class="particle c' + $.rnd(1, 2) + '" style="top:' + $.rnd(10, 50) + '%; left:' + $.rnd(0, 100) + '%;width:' + $.rnd(6, 8) + 'px; height:' + $.rnd(3, 4) + 'px;animation-delay: ' + ($.rnd(0, 30) / 10) + 's;"></span>');
+                }
+            });
+        }
+
+        function fire() {
+            $.each($(".particletext.fire"), function () {
+                var firecount = ($(this).width() / 50) * 20;
+                for (var i = 0; i <= firecount; i++) {
+                    var size = $.rnd(8, 12);
+                    $(this).append('<span class="particle" style="top:' + $.rnd(40, 70) + '%; left:' + $.rnd(-10, 100) + '%;width:' + size + 'px; height:' + size + 'px;animation-delay: ' + ($.rnd(0, 20) / 10) + 's;"></span>');
+                }
+            });
+        }
+
+        function sunbeams() {
+            $.each($(".particletext.sunbeams"), function () {
+                var linecount = ($(this).width() / 50) * 10;
+                for (var i = 0; i <= linecount; i++) {
+                    $(this).append('<span class="particle" style="top:' + $.rnd(-50, 0) + '%; left:' + $.rnd(0, 100) + '%;width:' + $.rnd(1, 3) + 'px; height:' + $.rnd(80, 160) + '%;animation-delay: -' + ($.rnd(0, 30) / 10) + 's;"></span>');
+                }
+            });
+        }
+
+        jQuery.rnd = function (m, n) {
+            m = parseInt(m);
+            n = parseInt(n);
+            return Math.floor(Math.random() * (n - m + 1)) + m;
+        }
+
     </script>
 </body>
 

@@ -1,3 +1,38 @@
+<html>
+
+<body>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- <div id="g_id_onload" data-client_id="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com"
+        data-context="signin" data-login_uri="localhost" data-auto_select="false" data-cancel_on_tap_outside="false"
+        data-context="use">
+    </div> -->
+    <div id="g_id_onload" data-client_id="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com"
+        data-login_uri="https://your.domain/your_login_endpoint" data-auto_prompt="true">
+    </div>
+    <div class="g_id_signin" data-type="standard" data-size="large" data-text="continue_with" data-shape="pill"
+        data-logo_alignment="center" data-theme="filled_black">
+    </div>
+
+    <div id="g_id_onload" data-client_id="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com"
+        data-context="signin" data-ux_mode="popup" data-login_uri="localhost" data-auto_prompt="false">
+    </div>
+
+    <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_black" data-text="signin_with"
+        data-size="large" data-logo_alignment="left">
+    </div>
+
+    <div class="g_id_signout" id="signout_button">Sign Out</div>
+    <script>
+        const button = document.getElementById('signout_button');
+        button.onclick = () => {
+            console.log('log out');
+            google.accounts.id.disableAutoSelect();
+        }
+    </script>
+</body>
+
+</html>
+
 <!-- <!DOCTYPE html>
 <html lang="en">
 
@@ -9,27 +44,15 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id"
         content="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com">
-    <title>TV Fandom</title>
-    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
-    <div class="g-signin2" data-onsuccess="onSignIn" data-type="icon" data-size="medium" data-theme="dark"></div>
-    <div id="g_id_onload" data-client_id="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com"
-        data-context="signin" data-ux_mode="popup" data-callback="onSignIn" data-nonce="">
-    </div>
 
-    <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_black" data-text="continue_with"
-        data-size="large" data-logo_alignment="left">
-    </div>
-    <div id="g_id_onload" data-client_id="298897629681-u86dd9pq3hampuemvpnaeprlu7tm9ugm.apps.googleusercontent.com"
-        data-context="signin" data-ux_mode="popup" data-callback="onSignIn" data-auto_prompt="false">
-    </div>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-onfailure="errorLogin()" data-type="icon" data-size="medium"
+        data-theme="dark" data-text="continue_with"></div>
+    s<div class="g-signin2" data-onsuccess="onSignIn" data-type="icon" data-size="medium" data-theme="dark"></div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <div class="g_id_signin" data-type="standard" data-theme="filled_black" data-text="continue_with" data-size="large"
-        data-logo_alignment="left" data-width="150">
-    </div>
-    <a href="#" onclick="signOut();">Sign out</a>
     <script>
         function signOut() {
             var auth2 = gapi.auth2.getAuthInstance();
@@ -50,20 +73,18 @@
             console.log('Family Name: ' + profile.getFamilyName());
             console.log("Image URL: " + profile.getImageUrl());
             console.log("Email: " + profile.getEmail());
-
+            // googleUser.disconnect()
             // The ID token you need to pass to your backend:
             var id_token = googleUser.getAuthResponse().id_token;
             console.log("ID Token: " + id_token);
         }
     </script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-    <script src="assets/js/gl.js"></script>
 </body>
 
-</html>
- -->
-<html>
+</html> -->
+
+<!-- <html>
 
 <head>
     <meta name="google-signin-client_id"
@@ -90,7 +111,6 @@
                 'theme': 'filled_black',
                 'onsuccess': onSuccess,
                 'onfailure': onFailure,
-                text: 'continue_with'
             });
         }
     </script>
@@ -98,4 +118,4 @@
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 </body>
 
-</html>
+</html> -->
